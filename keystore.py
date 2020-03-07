@@ -15,7 +15,8 @@ class KeyStore:
         cursor = self.db.cursor()
         cursor.execute("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='keys'")
         if cursor.fetchone()[0]==0 :
-            self.db.execute("CREATE TABLE keys (id INTEGER PRIMARY KEY AUTOINCREMENT, identifier INTEGER UNIQUE, access_key INTEGER, save_secret TEXT)")
+            self.db.execute(
+                "CREATE TABLE keys (id INTEGER PRIMARY KEY AUTOINCREMENT, identifier INTEGER UNIQUE, access_key TEXT, save_secret TEXT)")
         cursor.close()
 
     def add_new_key(self, identifier) -> KeyData or None:
