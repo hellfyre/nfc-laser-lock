@@ -37,7 +37,7 @@ def work_on_tag(tag):
         tag.write(7, secret[4:8])
         tag.write(8, secret[8:12])
         tag.write(9, secret[12:16])
-        tag.protect(password=key.get_access_key(), read_protect=True, protect_from=6)
+        tag.protect(password=key.get_access_key(), read_protect=True, protect_from=4)
     else:
         if key is not None:
             print(tag.authenticate(key.access_key))
