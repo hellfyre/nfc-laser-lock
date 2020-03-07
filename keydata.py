@@ -15,7 +15,7 @@ class KeyData:
         self.secret = secret
         self.save_secret = save_secret
         if self.secret is not None and self.save_secret is not None:
-            if not self.__validate():
+            if not self.validate():
                 raise Exception('Secret validation failed')
 
     @staticmethod
@@ -39,7 +39,7 @@ class KeyData:
         return self.access_key
 
     def generate_save_secret(self):
-        self.save_secret = bcrypt.hashpw(self.secret.hex().encode('utf8'), bcrypt.gensalt())
+        self.save_secret = bcrypt.hashpw(self.secret.hex().encode('utf-8'), bcrypt.gensalt())
         return self.save_secret
 
     def validate(self, secret):
@@ -49,4 +49,4 @@ class KeyData:
             raise Exception('secret not set')
         if self.save_secret is None :
             raise Exception('save_secret not set or generated')
-        return bcrypt.checkpw(self.secret.hex().encode('utf8'), self.save_secret)
+        return bcrypt.checkpw(self.secret.hex().encode('utf-8'), self.save_secret)

@@ -1,14 +1,22 @@
+#!/usr/bin/python3.8
+
 import nfc
 import ndef
 from threading import Thread
 from keystore import KeyStore
 import sys
 import logging
+import argparse
 
 LOG_LEVEL = logging.DEBUG
 
 logging.basicConfig(stream=sys.stderr, level=LOG_LEVEL)
 logger = logging.getLogger(__name__)
+parser = argparse.ArgumentParser(description='Authenticate via nfc.')
+parser.add_argument('--add-key', action='store_true')
+parser.add_argument('--daemon', action='store_true')
+args = parser.parse_args()
+print(args)
 
 
 def work_on_tag(tag):
@@ -16,11 +24,12 @@ def work_on_tag(tag):
 
     keystore = KeyStore()
     logger.debug('Trying to fetch key from DB')
-    logger.debug(tag.dump())
+    # logger.debug(tag.dump())
     logger.debug(type(tag))
     key = keystore.get_key_from_db(tag.identifier)
+    print(tag.__class__.__name__)
 
-    if key is None:
+    if key is None and args.add_key and tag.__class__.__name__ == 'NTAG215':
         key = keystore.add_new_key(tag.identifier)
         secret = key[0]
         key = key[1]
@@ -30,17 +39,14 @@ def work_on_tag(tag):
         tag.write(9, secret[12:16])
         tag.protect(password=key.get_access_key(), read_protect=True, protect_from=6)
     else:
-        print(tag.authenticate(key.access_key))
-        print(tag.read(6))
-        print(key.validate(tag.read(6)))
-        tag.protect(password=bytes(0), read_protect=False, protect_from=0)
-        tag.format()
-
-    # tag.format()
+        if key is not None:
+            print(tag.authenticate(key.access_key))
+            print(key.validate(tag.read(6)))
 
 
 clf = nfc.ContactlessFrontend('usb')
+
+while args.daemon:
+    clf.connect(rdwr={'on-connect': work_on_tag})
+
 clf.connect(rdwr={'on-connect': work_on_tag})
-
-
-
