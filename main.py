@@ -1,7 +1,5 @@
-#!/usr/bin/python3.8
-
 import nfc
-from keystore import KeyStore
+from .keystore import KeyStore
 import sys
 import logging
 import argparse
@@ -59,9 +57,13 @@ def work_on_tag(tag):
 
 
 
-clf = nfc.ContactlessFrontend('usb')
+def main():
+    try:
+        clf = nfc.ContactlessFrontend('usb')
+    except IOError as ioe:
+        exit("Could not find NFC reader: {}".format(ioe))
 
-while args.daemon:
+    while args.daemon:
+        clf.connect(rdwr={'on-connect': work_on_tag})
+
     clf.connect(rdwr={'on-connect': work_on_tag})
-
-clf.connect(rdwr={'on-connect': work_on_tag})

@@ -1,5 +1,5 @@
 import sqlite3
-from keydata import KeyData
+from .keydata import KeyData
 
 
 class KeyStore:
