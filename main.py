@@ -22,7 +22,7 @@ pin = OutputDevice(args.pin)
 scheduler = Scheduler(time, sleep)
 currentEvent = None
 
-def work_on_tag(tag):
+def tag_connected(tag):
     global currentEvent
     logger.debug('Tag found: ' + str(tag))
 
@@ -55,6 +55,12 @@ def work_on_tag(tag):
                 pin.on()
                 currentEvent = scheduler.enter(7200, 1, pin.off)
 
+def tag_released(tag):
+    global currentEvent
+    if currentEvent:
+        scheduler.cancel(currentEvent)
+
+    currentEvent = scheduler.enter(10, 1, pin.off)
 
 
 def main():
@@ -64,6 +70,6 @@ def main():
         exit("Could not find NFC reader: {}".format(ioe))
 
     while args.daemon:
-        clf.connect(rdwr={'on-connect': work_on_tag})
+        clf.connect(rdwr={'on-connect': tag_connected, 'on-release': tag_released})
 
-    clf.connect(rdwr={'on-connect': work_on_tag})
+    clf.connect(rdwr={'on-connect': tag_connected})
