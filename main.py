@@ -4,7 +4,7 @@ import sys
 import logging
 import argparse
 from gpiozero import OutputDevice
-from sched import scheduler as Scheduler
+from sched import scheduler
 from time import time, sleep
 
 LOG_LEVEL = logging.DEBUG
@@ -19,8 +19,9 @@ args = parser.parse_args()
 print(args)
 
 pin = OutputDevice(args.pin)
-scheduler = Scheduler(time, sleep)
+scheduler = scheduler(time, sleep)
 currentEvent = None
+
 
 def tag_connected(tag):
     global currentEvent
@@ -54,6 +55,7 @@ def tag_connected(tag):
             else:
                 pin.on()
                 currentEvent = scheduler.enter(7200, 1, pin.off)
+
 
 def tag_released(tag):
     global currentEvent

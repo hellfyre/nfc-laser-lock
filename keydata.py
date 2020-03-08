@@ -3,13 +3,12 @@ import bcrypt
 
 
 class KeyData:
-
     identifier: int = None
     access_key: bytes = None
     secret: bytes = None
     save_secret: str = None
 
-    def __init__(self, identifier, access_key, secret, save_secret = None):
+    def __init__(self, identifier, access_key, secret, save_secret=None):
         self.identifier = identifier
         self.access_key = access_key
         self.secret = secret
@@ -47,6 +46,6 @@ class KeyData:
             self.secret = secret
         if self.secret is None:
             raise Exception('secret not set')
-        if self.save_secret is None :
+        if self.save_secret is None:
             raise Exception('save_secret not set or generated')
         return bcrypt.checkpw(self.secret.hex().encode('utf-8'), self.save_secret)

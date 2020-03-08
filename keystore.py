@@ -3,7 +3,6 @@ from .keydata import KeyData
 
 
 class KeyStore:
-
     db = None
 
     def __init__(self):
@@ -14,7 +13,7 @@ class KeyStore:
 
         cursor = self.db.cursor()
         cursor.execute("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='keys'")
-        if cursor.fetchone()[0]==0 :
+        if cursor.fetchone()[0] == 0:
             self.db.execute(
                 "CREATE TABLE keys (id INTEGER PRIMARY KEY AUTOINCREMENT, identifier INTEGER UNIQUE, access_key TEXT, save_secret TEXT)")
         cursor.close()
@@ -31,7 +30,7 @@ class KeyStore:
         cursor.close()
         return [secret, new_key]
 
-    def get_key_from_db(self, identifier) -> KeyData:
+    def get_key_from_db(self, identifier) -> KeyData or None:
         cursor = self.db.cursor()
         cursor.execute("SELECT access_key, save_secret FROM keys WHERE identifier = ?", [int.from_bytes(identifier, byteorder='big')])
         key_raw = cursor.fetchone()

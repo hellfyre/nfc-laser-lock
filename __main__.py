@@ -1,2 +1,2 @@
-from nfclock.main import main
+from .main import main
 main()
