@@ -5,8 +5,8 @@ from .keydata import KeyData
 class KeyStore:
     db = None
 
-    def __init__(self):
-        self.db = sqlite3.connect('keystore.sqlite')
+    def __init__(self, database_file):
+        self.db = sqlite3.connect(database_file)
 
         if not self.db:
             raise ConnectionError()

@@ -6,6 +6,7 @@ import argparse
 from gpiozero import OutputDevice
 from sched import scheduler
 from time import time, sleep
+import os
 
 LOG_LEVEL = logging.DEBUG
 
@@ -13,23 +14,26 @@ logging.basicConfig(stream=sys.stderr, level=LOG_LEVEL)
 logger = logging.getLogger(__name__)
 parser = argparse.ArgumentParser(description='Authenticate via nfc.')
 parser.add_argument('--add-key', action='store_true')
+parser.add_argument('--database-file', default='/etc/nfclock/keystore.sqlite')
 parser.add_argument('--daemon', action='store_true')
-parser.add_argument('--pin')
+parser.add_argument('--pin', default="1")
 args = parser.parse_args()
-print(args)
 
 pin = OutputDevice(args.pin)
 scheduler = scheduler(time, sleep)
 currentEvent = None
+
+args.database_file = os.path.abspath(args.database_file)
+databaseFilePath = os.path.dirname(args.database_file)
+os.makedirs(databaseFilePath, exist_ok=True)
 
 
 def tag_connected(tag):
     global currentEvent
     logger.debug('Tag found: ' + str(tag))
 
-    keystore = KeyStore()
+    keystore = KeyStore(args.database_file)
     logger.debug('Trying to fetch key from DB')
-    # logger.debug(tag.dump())
     logger.debug(type(tag))
     key = keystore.get_key_from_db(tag.identifier)
     print(tag.__class__.__name__)
