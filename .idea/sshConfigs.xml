@@ -2,7 +2,7 @@
 <project version="4">
   <component name="SshConfigs">
     <configs>
-      <sshConfig authType="OPEN_SSH" host="192.168.178.234" id="cf8c342e-4089-4223-b0a5-ae16970e5c1d" port="22" customName="lcdpi" nameFormat="CUSTOM">
+      <sshConfig authType="OPEN_SSH" host="lcdpi.local" id="cf8c342e-4089-4223-b0a5-ae16970e5c1d" port="22" customName="lcdpi" nameFormat="CUSTOM" username="matthias">
         <option name="customName" value="lcdpi" />
       </sshConfig>
     </configs>

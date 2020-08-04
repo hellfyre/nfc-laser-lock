@@ -7,6 +7,13 @@
           <mappings>
             <mapping deploy="/home/matthias/nfclock/" local="$PROJECT_DIR$" web="/" />
           </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/nfclock.iml" />
+            <excludedPath local="true" path="$PROJECT_DIR$/README.md" />
+            <excludedPath local="true" path="$PROJECT_DIR$/requirements.txt" />
+            <excludedPath local="true" path="$PROJECT_DIR$/setup.py" />
+            <excludedPath local="true" path="$PROJECT_DIR$/.gitignore" />
+          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>

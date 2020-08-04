@@ -2,12 +2,11 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="c80edd15-8a8e-4d13-9e81-674c53551dfd" name="lcdpi" url="http://192.168.178.234">
-        <fileTransfer host="192.168.178.234" port="22" accessType="SFTP" authAgent="true">
+      <webServer id="c80edd15-8a8e-4d13-9e81-674c53551dfd" name="lcdpi" url="http://lcdpi.local">
+        <fileTransfer accessType="SFTP" host="lcdpi.local" port="22" sshConfigId="cf8c342e-4089-4223-b0a5-ae16970e5c1d" sshConfig="lcdpi" authAgent="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
-          <option name="port" value="22" />
         </fileTransfer>
       </webServer>
     </option>
