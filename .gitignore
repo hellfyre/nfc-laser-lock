@@ -1,0 +1,4 @@
+/build
+/dist
+/nfclock.egg-info
+*.pyc
