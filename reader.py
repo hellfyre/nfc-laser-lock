@@ -5,12 +5,12 @@ from time import sleep
 
 
 class Reader(Thread):
-    def __init__(self):
+    def __init__(self, once=False):
         super().__init__()
         self.log = logging.getLogger('Reader')
         self.connect_handler = None
         self.release_handler = None
-        self.stopped = False
+        self.once = once
 
         try:
             self.clf = nfc.ContactlessFrontend('usb')
@@ -31,11 +31,11 @@ class Reader(Thread):
         if self.release_handler:
             self.release_handler(tag)
 
-    def stop(self):
-        self.stopped = True
-
     def run(self):
-        while not self.stopped:
+        self.clf.connect(rdwr={'on-connect': self.tag_connected, 'on-release': self.tag_released})
+        sleep(1)
+
+        while not self.once:
             self.log.info('Entering new reader cycle')
             self.clf.connect(rdwr={'on-connect': self.tag_connected, 'on-release': self.tag_released})
             sleep(5)
