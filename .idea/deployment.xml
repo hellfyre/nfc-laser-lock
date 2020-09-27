@@ -2,6 +2,18 @@
 <project version="4">
   <component name="PublishConfigData" serverName="lcdpi">
     <serverData>
+      <paths name="laserpi">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/nfclock.iml" />
+            <excludedPath local="true" path="$PROJECT_DIR$/README.md" />
+            <excludedPath local="true" path="$PROJECT_DIR$/.gitignore" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
       <paths name="lcdpi">
         <serverdata>
           <mappings>
@@ -10,7 +22,6 @@
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/nfclock.iml" />
             <excludedPath local="true" path="$PROJECT_DIR$/README.md" />
-            <excludedPath local="true" path="$PROJECT_DIR$/requirements.txt" />
             <excludedPath local="true" path="$PROJECT_DIR$/setup.py" />
             <excludedPath local="true" path="$PROJECT_DIR$/.gitignore" />
           </excludedPaths>

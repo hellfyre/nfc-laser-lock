@@ -23,7 +23,7 @@ class KeyData:
         key = os.urandom(16)
         new_key = KeyData(identifier, key, secret)
         new_key.generate_save_secret()
-        return [new_key, secret]
+        return new_key, secret
 
     def get_save_secret(self):
         return self.save_secret
