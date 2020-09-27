@@ -1,13 +1,11 @@
-#!/usr/bin/python3.8
-
-import nfc
-from keystore import KeyStore
+from .keystore import KeyStore
+from .reader import Reader
+from .scheduler import Scheduler
 import sys
 import logging
 import argparse
 from gpiozero import OutputDevice
-from sched import scheduler as Scheduler
-from time import time, sleep
+import os
 
 LOG_LEVEL = logging.DEBUG
 
@@ -15,8 +13,8 @@ logging.basicConfig(stream=sys.stderr, level=LOG_LEVEL)
 logger = logging.getLogger(__name__)
 parser = argparse.ArgumentParser(description='Authenticate via nfc.')
 parser.add_argument('--add-key', action='store_true')
-parser.add_argument('--daemon', action='store_true')
-parser.add_argument('--pin')
+parser.add_argument('--database-file', default='/etc/nfclock/keystore.sqlite')
+parser.add_argument('--pin', default="1")
 args = parser.parse_args()
 
 pin = OutputDevice(args.pin)
@@ -69,42 +67,15 @@ def authenticate_key(tag):
         currentEvent = Scheduler(10, pin.off)
         currentEvent.start()
 
-pin = OutputDevice(args.pin)
-scheduler = Scheduler(time, sleep)
-currentEvent = None
 
-
-def work_on_tag(tag):
-    global currentEvent
+def tag_connected(tag):
     logger.debug('Tag found: ' + str(tag))
 
     logger.debug('Trying to fetch key from DB')
     logger.debug(type(tag))
-
-    key = keystore.get_key_from_db(tag.identifier)
-    print(tag.__class__.__name__)
-
-    if key is None or tag.__class__.__name__ != 'NTAG215':
+    if tag.__class__.__name__ != 'NTAG215':
+        logger.error(f'Wrong tag type ({tag.__class__.__name__})')
         return
-
-    if args.add_key:
-        key = keystore.add_new_key(tag.identifier)
-        secret = key[0]
-        key = key[1]
-        tag.write(6, secret[0:4])
-        tag.write(7, secret[4:8])
-        tag.write(8, secret[8:12])
-        tag.write(9, secret[12:16])
-        tag.protect(password=key.get_access_key(), read_protect=True, protect_from=4)
-    else:
-        if tag.authenticate(key.access_key) and key.validate(tag.read(6)):
-            if pin.is_active():
-                pin.off()
-                if currentEvent:
-                    scheduler.cancel(currentEvent)
-            else:
-                pin.on()
-                currentEvent = scheduler.enter(7200, 1, pin.off)
 
     if args.add_key:
         add_key(tag)
