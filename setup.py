@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="nfclock",
-    version="0.1",
+    version="1.0",
     author="Steffen Arntz, Matthias Uschok",
     author_email="dev@uschok.de",
     description="Simple tool to identify and authenticate cheap nfc-tags against a DB of known authorized keys.",
