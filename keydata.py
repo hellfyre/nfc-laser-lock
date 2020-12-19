@@ -18,7 +18,7 @@ class KeyData:
                 raise Exception('Secret validation failed')
 
     @staticmethod
-    def generate_new(identifier) -> list:
+    def generate_new(identifier) -> tuple:
         secret = os.urandom(16)
         key = os.urandom(16)
         new_key = KeyData(identifier, key, secret)

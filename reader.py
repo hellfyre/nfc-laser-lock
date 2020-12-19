@@ -25,11 +25,11 @@ class Reader(Thread):
 
     def tag_connected(self, tag):
         if self.connect_handler:
-            self.connect_handler(tag)
+            self.connect_handler.handle_tag(tag)
 
     def tag_released(self, tag):
         if self.release_handler:
-            self.release_handler(tag)
+            self.release_handler.handle_tag(tag)
 
     def run(self):
         self.clf.connect(rdwr={'on-connect': self.tag_connected, 'on-release': self.tag_released})
