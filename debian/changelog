@@ -1,3 +1,10 @@
+nfclock (1.1.0) testing; urgency=medium
+
+  * Add MIT LICENSE
+  * Debianize nfclock
+
+ -- Matthias Uschok <dev@uschok.de>  Sun, 03 Jan 2021 16:28:09 +0100
+
 nfclock (1.0.1) testing; urgency=medium
 
   * Initial Release.
