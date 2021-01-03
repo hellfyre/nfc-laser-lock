@@ -1,0 +1,44 @@
+Source: nfclock
+Section: misc
+Priority: optional
+Maintainer: Matthias Uschok <dev@uschok.de>
+Build-Depends: debhelper-compat (= 13), dh-python, python3-setuptools, python3-all
+Standards-Version: 4.5.0
+Homepage: https://git.uschok.de/uschok/nfclock
+Vcs-Browser: https://git.uschok.de/uschok/nfclock
+Vcs-Git: https://git.uschok.de/uschok/nfclock
+#Testsuite: autopkgtest-pkg-python
+Rules-Requires-Root: no
+
+Package: nfclock
+Architecture: all
+Depends: python3-nfclock, adduser
+Description: Daemon to authenticate NFC-tags and toggle a GPIO on an RPi (Daemon)
+ This python package contains a daemon that can write and lock NFC-tags with a
+ secret. Once written, the tags can be authenticated against nfclock's database
+ in order to switch a pre-defined GPIO on a Raspberry Pi.
+ .
+ This package installs SystemD startup scripts
+
+
+Package: python3-nfclock
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}, python3-bcrypt, python3-gpiozero
+Suggests: python-nfclock-doc
+Description: Daemon to authenticate NFC-tags and toggle a GPIO on an RPi (Python 3)
+ This python package contains a daemon that can write and lock NFC-tags with a
+ secret. Once written, the tags can be authenticated against nfclock's database
+ in order to switch a pre-defined GPIO on a Raspberry Pi.
+ .
+ This package installs the library for Python 3.
+
+Package: python-nfclock-doc
+Architecture: all
+Section: doc
+Depends: ${sphinxdoc:Depends}, ${misc:Depends}
+Description: Daemon to authenticate NFC-tags and toggle a GPIO on an RPi (common documentation)
+ This python package contains a daemon that can write and lock NFC-tags with a
+ secret. Once written, the tags can be authenticated against nfclock's database
+ in order to switch a pre-defined GPIO on a Raspberry Pi.
+ .
+ This is the common documentation package.

@@ -1,0 +1,12 @@
+[Unit]
+Description=NFC Lock
+
+[Service]
+Type=simple
+User=nfclock
+ExecStart=/usr/bin/python3 -m nfclock auth
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
