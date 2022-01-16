@@ -2,7 +2,7 @@
 <project version="4">
   <component name="SshConfigs">
     <configs>
-      <sshConfig authType="OPEN_SSH" host="laserpi" id="2ff47ce9-6789-4912-99b9-f0fade53ebb2" port="22" nameFormat="DESCRIPTIVE" username="pi" />
+      <sshConfig authType="OPEN_SSH" connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="laserpi" id="2ff47ce9-6789-4912-99b9-f0fade53ebb2" port="22" nameFormat="DESCRIPTIVE" username="pi" />
     </configs>
   </component>
 </project>
